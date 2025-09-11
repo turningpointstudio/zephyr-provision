@@ -11,15 +11,15 @@ Securely bootstrap a Windows 11 machine for Ansible management.
 
 Write-Host "=== Secure Bootstrap for Ansible ==="
 
-### STEP 1: Enable PSRemoting
-Write-Host "Enabling PSRemoting..."
-Enable-PSRemoting -Force
-
 # Change adapter to Private (script is failing for Public). Should probably look into this more.
 Write-Host "Changing network adapter to Private..."
 Get-NetConnectionProfile | Where-Object { $_.NetworkCategory -eq 'Public' } | ForEach-Object {
   Set-NetConnectionProfile -InterfaceIndex $_.InterfaceIndex -NetworkCategory Private
 }
+
+### STEP 1: Enable PSRemoting
+Write-Host "Enabling PSRemoting..."
+Enable-PSRemoting -Force
 
 ### STEP 2: Add HTTPS listener with a self signed certificate
 Write-Host "Creating self-signed certificate..."

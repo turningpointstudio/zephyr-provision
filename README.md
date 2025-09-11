@@ -1,6 +1,6 @@
-Step 1:
-Make sure you are connected to the internet
-Run bootstrap as admin
+Step 1: Provision Hosts
+- Make sure you are connected to the internet
+- Run bootstrap.cmd as admin
 
 Step 2:
 Create inventory file (this changes per deployment)

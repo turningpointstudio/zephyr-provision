@@ -9,6 +9,14 @@ Securely bootstrap a Windows 11 machine for Ansible management.
 - Configures firewall rules for WinRM HTTPS.
 #>
 
+# --- Self Elevation Block ---
+If (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()
+  ).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
+  Write-Host "Restarting script with elevated privileges..."
+  Start-Process powershell "-ExecutionPolicy Bypass -NoProfile -File `"$PSCommandPath`"" -Verb RunAs
+  Exit
+}
+
 Write-Host "=== Secure Bootstrap for Ansible ==="
 
 ### STEP 1: Enable PSRemoting

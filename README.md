@@ -1,5 +1,6 @@
 Step 1:
-Each Windows machine needs to be bootrapped. Example is in directory (bootstrap.ps1)
+Make sure you are connected to the internet
+Run bootstrap as admin
 
 Step 2:
 Create inventory file (this changes per deployment)

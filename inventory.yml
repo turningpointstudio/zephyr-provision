@@ -3,8 +3,8 @@ myhosts:
     workstation_1:
       ansible_host: 192.168.4.121
   vars:
-    ansible_user: volare
-    ansible_password: volare2025!
+    ansible_user: ansible  
+    ansible_password: ansible2025!
     ansible_port: 5986
     ansible_connection: winrm
     ansible_winrm_transport: basic

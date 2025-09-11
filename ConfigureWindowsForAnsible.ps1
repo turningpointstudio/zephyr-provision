@@ -17,6 +17,13 @@ Get-NetConnectionProfile | Where-Object { $_.NetworkCategory -eq 'Public' } | Fo
   Set-NetConnectionProfile -InterfaceIndex $_.InterfaceIndex -NetworkCategory Private
 }
 
+### STEP 0: Set PowerShell execution policy for Ansible
+Write-Host "Setting PowerShell execution policy to RemoteSigned..."
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine -Force
+
+Write-Host "Allow Basic Authentication..."
+Set-Item -Path WSMan:\localhost\Service\Auth\Basic -Value $true
+
 ### STEP 1: Enable PSRemoting
 Write-Host "Enabling PSRemoting..."
 Enable-PSRemoting -Force

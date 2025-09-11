@@ -15,6 +15,11 @@ Write-Host "=== Secure Bootstrap for Ansible ==="
 Write-Host "Enabling PSRemoting..."
 Enable-PSRemoting -Force
 
+# Change adapter to Private (script is failing for Public). Should probably look into this more.
+Get-NetConnectionProfile | Where-Object { $_.NetworkCategory -eq 'Public' } | ForEach-Object {
+  Set-NetConnectionProfile -InterfaceIndex $_.InterfaceIndex -NetworkCategory Private
+}
+
 ### STEP 2: Add HTTPS listener with a self signed certificate
 Write-Host "Creating self-signed certificate..."
 $certParams = @{
@@ -48,9 +53,8 @@ $firewallParams = @{
   Direction   = 'Inbound'
   DisplayName = 'Windows Remote Management (HTTPS-In)'
   LocalPort   = 5986
-  Profile     = @('Domain', 'Private', 'Public')
+  Profile     = "Any"
   Protocol    = 'TCP'
-  Enabled     = $true
 }
 New-NetFirewallRule @firewallParams
 

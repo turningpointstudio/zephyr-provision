@@ -1,0 +1,93 @@
+---
+- name: Play to download installers
+  hosts: all  
+  tasks:
+    - name: Download to Public Downloads
+      win_get_url:
+        url: " {{ item }}"
+        dest: "C:/Users/Public/Downloads" # installer folder could live on the D drive
+      loop:
+        - "https://dl.google.com/chrome/install/latest/chrome_installer.exe"
+        - "https://freefilesync.org/download/FreeFileSync_14.4_Windows_Setup.exe"
+        - "https://2.na.dl.wireshark.org/win64/Wireshark-4.4.9-x64.exe"
+        # - creative cloud
+        # - aja system test
+        # - vs code
+        # - NDI tools
+        # - NotchLC plugin
+        # - remote desktop
+        # - vpn
+        # - docker desktop
+        # - disguise
+        # - resolume alley
+
+# - name: Install software on Windows nodes
+#   hosts: all
+#   tasks:
+#     - name: Install Chrome
+#       ansible.windows.win_package:
+#         path: "https://dl.google.com/chrome/install/latest/chrome_installer.exe"
+#         state: present
+#     - name: Install Wireshark
+#       ansible.windows.win_package:
+#         path: "https://2.na.dl.wireshark.org/win64/Wireshark-4.4.9-x64.exe"
+#         state: present
+#         arguments:
+#           - /S
+#           - /desktopicon=yes
+
+
+    ######## Working example of mapping a drive as user "ansible". The drive mapping is per user. You need to log out and back in again before the drive is available.
+    # - name: Save d3 credentials for the share
+    #   win_credential:
+    #     name: 10.40.1.200
+    #     type: domain_password
+    #     username: d3
+    #     secret: d3
+    #     state: present
+    #   become: yes
+    #   become_user: ansible
+
+    # - name: Map W drive to \\10.40.1.200\d3 Projects
+    #   win_mapped_drive:
+    #     letter: Z
+    #     path: "\\\\10.40.1.200\\d3 Projects"
+    #     state: present
+    #     username: d3
+    #     password: d3
+
+
+
+    ######## Working example of creating and sharing a folder
+    # - name: Create folder
+    #   win_file:
+    #     path: "C:/Users/Hive/Downloads/Shared"
+    #     state: directory
+
+    # - name: Share folder
+    #   win_share:
+    #     name: "VMA25-Downloads"
+    #     description: "Downloads folder"
+    #     path: "C:/Users/Hive/Downloads/Shared"
+    #     full: "vma25"
+    #     state: present
+
+    ######## Working example of editing a text file
+    # - name: Set Text Example
+    #   win_lineinfile:
+    #     path: "C:/Program Files/Adobe/Adobe Media Encoder 2025/ame_webservice_config.ini"
+    #     regexp: '^#?ip\s*='
+    #     line: "ip = 192.168.50.1"
+    #     state: present
+
+    # - name: Set Text Example 2
+    #   win_lineinfile:
+    #     path: "C:/Program Files/Adobe/Adobe Media Encoder 2025/ame_webservice_config.ini"
+    #     regexp: '^port*='
+    #     line: "port = 8081"
+    #     state: present
+
+    ######## Working example of configuring an IP address (can use the commands from Awakening config to finish this)
+    # - name: Configure IP
+      # win_shell: |
+        # Disable-NetAdapter -Name 'Ethernet 2' -Confirm:$false

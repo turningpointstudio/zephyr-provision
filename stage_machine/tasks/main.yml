@@ -1,0 +1,3 @@
+---
+# tasks file for stage_machine
+- include_tasks: create_folders.yml

@@ -1,0 +1,10 @@
+---
+- name: Create default folder structure
+  win_file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - "D:/{{ project_name }}/Delivery/local"
+    - "D:/{{ project_name }}/Delivery/MASV"
+    - "D:/{{ project_name }}/Docker"
+    - "D:/{{ project_name }}/Syncs/Logs"

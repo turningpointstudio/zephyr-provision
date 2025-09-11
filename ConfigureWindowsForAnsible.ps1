@@ -16,6 +16,7 @@ Write-Host "Enabling PSRemoting..."
 Enable-PSRemoting -Force
 
 # Change adapter to Private (script is failing for Public). Should probably look into this more.
+Write-Host "Changing network adapter to Private..."
 Get-NetConnectionProfile | Where-Object { $_.NetworkCategory -eq 'Public' } | ForEach-Object {
   Set-NetConnectionProfile -InterfaceIndex $_.InterfaceIndex -NetworkCategory Private
 }

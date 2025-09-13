@@ -1,3 +1,12 @@
 ---
+
 # tasks file for stage_machine
-- include_tasks: create_folders.yml
+# - include_tasks: add_user.yml
+# - include_tasks: create_folders.yml
+# - include_tasks: download_installers.yml
+# - include_tasks: install_software.yml
+# - include_tasks: setup_deadline.yml
+# - include_tasks: setup_media_encoder.yml
+# - include_tasks: map_network_drives.yml
+# - include_tasks: configure_networking.yml
+- include_tasks: setup_hyperv_vlans.yml # incomplete

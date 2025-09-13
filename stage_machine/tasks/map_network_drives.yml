@@ -1,0 +1,30 @@
+--- 
+
+- name: Remove any existing M drive mapping
+  win_mapped_drive:
+    letter: M
+    state: absent
+
+- name: Map Drive for SS25 user
+  block:
+    - name: Save the network credentials
+      win_credential:
+        name: 192.168.4.93
+        type: domain_password
+        username: abc123
+        secret: abc123-password
+        state: present
+
+    - name: Map the drive
+      win_mapped_drive:
+        letter: M
+        path: "\\\\192.168.4.93\\delivery"
+        state: present
+
+  vars:
+    ansible_become: true
+    ansible_become_method: runas
+    ansible_become_user: 'SS25'
+    ansible_become_pass: 'SS25-password'
+
+# requires log out and back in again to see the drive

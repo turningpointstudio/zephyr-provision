@@ -1,4 +1,5 @@
 ---
+
 - name: Create default folder structure
   win_file:
     path: "{{ item }}"
@@ -8,3 +9,13 @@
     - "D:/{{ project_name }}/Delivery/MASV"
     - "D:/{{ project_name }}/Docker"
     - "D:/{{ project_name }}/Syncs/Logs"
+
+- name: Share folder
+  win_share:
+    name: "{{ project_name }} Local Delivery"
+    description: "Folder for local delivery of assets"
+    path: "D:/{{ project_name }}/Delivery/local"
+    # change: "" # users who get read/write access
+    read: "{{ project_name }}" # users who get read only access
+    full: "ansible" # users who get full access
+    state: present

@@ -1,0 +1,11 @@
+---
+
+- name: Add user
+  win_user:
+    name: "{{ project_name }}"
+    password: "{{ project_name }}-password"
+    fullname: "{{ project_name }} User"
+    description: "{{ project_name }} user for current project"
+    state: present
+    groups:
+      - Users

@@ -22,7 +22,7 @@ Get-NetConnectionProfile | Where-Object { $_.NetworkCategory -eq 'Public' } | Fo
 # Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine -Force
 
 # Write-Host "Allow Basic Authentication..."
-# Set-Item -Path WSMan:\localhost\Service\Auth\Basic -Value $true
+Set-Item -Path WSMan:\localhost\Service\Auth\Basic -Value $true
 
 ### STEP 1: Enable PSRemoting
 Write-Host "Enabling PSRemoting..."
@@ -67,13 +67,13 @@ $firewallParams = @{
 New-NetFirewallRule @firewallParams
 
 ### STEP 4: Create dedicated Ansible user
-$Username = "ansible"
-$PasswordPlain = "ansible2025!"
+$Username = "Ansible"
+$PasswordPlain = "Ansible2025!"
 $Password = ConvertTo-SecureString $PasswordPlain -AsPlainText -Force
 
 if (-not (Get-LocalUser -Name $Username -ErrorAction SilentlyContinue)) {
   Write-Host "Creating Ansible user '$Username'..."
-  New-LocalUser -Name $Username -Password $Password -FullName "Ansible Automation User" `
+  New-LocalUser -Name $Username -Password $Password -FullName "Ansible Automation" `
     -Description "Dedicated user for Ansible automation"
   Add-LocalGroupMember -Group "Administrators" -Member $Username
   Write-Host "User '$Username' created and added to Administrators group."

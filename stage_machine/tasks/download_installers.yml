@@ -1,0 +1,20 @@
+---
+
+- name: Download to Public Downloads
+  win_get_url:
+    url: " {{ item }}"
+    dest: "C:/Users/Public/Downloads" # installer folder could live on the D drive
+  loop:
+    - "https://dl.google.com/chrome/install/latest/chrome_installer.exe"
+    - "https://freefilesync.org/download/FreeFileSync_14.4_Windows_Setup.exe" # pull the donation edition from a public location
+    # - "https://2.na.dl.wireshark.org/win64/Wireshark-4.4.9-x64.exe" # needs additional
+    # - creative cloud
+    # - https://www.aja.com/assets/support/files/9979/en/AJA-Software-Installer_Windows_v17.5_Release.zip # this doesn't seem to be the right one
+    # - https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-user # failed
+    - https://downloads.ndi.tv/Tools/NDI%206%20Tools.exe
+    - https://cloudreleases.notch.one/NotchLC_AdobePlugin/NotchLC_AdobeCC_Plugin_1.3.1_win64.exe
+    # - remote desktop
+    # - vpn
+    - https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe
+    # - https://cfpkg.disguise.one/pkg/installers/d3/gold_release31/227560/d3-full-r31.3.2-227560_4be6d1220d_x64.exe # failed
+    # - https://www.resolume.com/download/file?file=Resolume_Alley_7_23_2_rev_51094_Installer.exe # failed

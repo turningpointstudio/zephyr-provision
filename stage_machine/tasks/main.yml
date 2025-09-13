@@ -9,4 +9,10 @@
 # - include_tasks: setup_media_encoder.yml
 # - include_tasks: map_network_drives.yml
 # - include_tasks: configure_networking.yml
-- include_tasks: setup_hyperv_vlans.yml # incomplete
+# - include_tasks: setup_hyperv_vlans.yml # incomplete
+
+- include_tasks: "{{ task_file }}"
+  loop:
+    - download_installers.yml
+  loop_control:
+    loop_var: task_file

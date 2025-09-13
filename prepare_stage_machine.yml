@@ -1,6 +1,0 @@
----
-- name: Prepare stage machine
-  hosts: all
-  gather_facts: yes
-  roles:
-    - stage_machine

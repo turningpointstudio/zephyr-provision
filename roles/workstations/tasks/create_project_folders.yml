@@ -1,0 +1,23 @@
+---
+
+- name: Create project folder structure
+  win_file:
+    path: "{{ project_folders }}"
+    state: directory
+  loop:
+    - "D:/{{ project_name }}/Delivery/local"
+    - "D:/{{ project_name }}/Delivery/MASV"
+    - "D:/{{ project_name }}/Docker"
+    - "D:/{{ project_name }}/Syncs/Logs"
+  loop_control:
+    loop_var: project_folders
+
+- name: Share folder
+  win_share:
+    name: "{{ project_name }} Local Delivery"
+    description: "Folder for local delivery of assets"
+    path: "D:/{{ project_name }}/Delivery/local"
+    # change: "" # users who get read/write access
+    read: "{{ project_name }}" # users who get read only access
+    full: "ansible" # users who get full access
+    state: present

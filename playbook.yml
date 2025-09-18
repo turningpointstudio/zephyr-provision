@@ -1,0 +1,13 @@
+---
+
+- hosts: all
+  roles:
+    - base
+
+- hosts: workstations
+  roles:
+    - workstations
+
+- hosts: stage_machines
+  roles:
+    - stage_machines

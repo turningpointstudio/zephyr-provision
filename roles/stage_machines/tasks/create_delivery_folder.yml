@@ -1,0 +1,23 @@
+---
+
+- name: Create delivery folder
+  win_file:
+    path: "{{ delivery_folder }}"
+    state: directory
+
+# this isn't fully working
+- name: Set delivery folder to be read only for local user
+  win_acl:
+    path: "{{ delivery_folder }}"
+    user: "{{ project_user }}"
+    type: allow
+    rights: Read
+    state: present
+
+- name: Share delivery folder
+  win_share:
+    name: "{{ share_name }} Delivery"
+    description: Folder for local delivery of assets
+    path: "{{ delivery_folder }}"
+    full: "{{ ansible_user }}"
+    state: present

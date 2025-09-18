@@ -2,6 +2,7 @@ Step 1: Provision Hosts
 - Make sure you are connected to the internet
 - Run bootstrap.cmd as admin
 Note: This currently asks you to confirm with Y and then throws an error on a VM. Also need to run twice for some reason.
+Note: add something to unblock ping
 
 Step 2:
 Create inventory file (this changes per deployment)

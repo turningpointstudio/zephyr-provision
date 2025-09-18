@@ -1,0 +1,9 @@
+---
+
+- include_tasks: "{{ work_stations_tasks }}"
+  loop:
+    # - create_project_folders.yml
+    # - install_software.yml
+    # - setup_deadline.yml
+  loop_control:
+    loop_var: work_stations_tasks

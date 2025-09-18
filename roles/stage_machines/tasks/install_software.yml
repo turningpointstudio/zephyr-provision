@@ -1,0 +1,5 @@
+---
+
+- name: Install Chrome
+  ansible.windows.win_package:
+    path: "https://dl.google.com/chrome/install/latest/chrome_installer.exe"

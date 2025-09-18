@@ -1,3 +1,0 @@
----
-# tasks file for workstation
-- include_tasks: create_folders.yml

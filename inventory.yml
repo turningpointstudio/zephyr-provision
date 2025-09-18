@@ -1,24 +1,15 @@
-management_server:
+---
+workstations:
   hosts:
     server_1:
-      ansible_host: 192.168.4.169
+      ansible_host: 192.168.4.172
 
-render_nodes:
+stage_machines:
   hosts:
     node_1:
-      ansible_host: 192.168.4.170
-    node_2:
-      ansible_host: 192.168.4.171
+      ansible_host: 192.168.4.173
 
-render_farm:
+site:
   children:
-    management_server:
-    render_nodes:
-  vars:
-    ansible_user: Ansible  
-    ansible_password: Ansible2025!
-    ansible_port: 5986
-    ansible_connection: winrm
-    ansible_winrm_transport: basic
-    ansible_winrm_scheme: https
-    ansible_winrm_server_cert_validation: ignore
+    workstations:
+    stage_machines:

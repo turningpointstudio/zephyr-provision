@@ -3,7 +3,8 @@
 - include_tasks: "{{ work_stations_tasks }}"
   loop:
     # - create_project_folders.yml
+    # - map_network_drives.yml
     # - install_software.yml
-    # - setup_deadline.yml
+    - configure_deadline_repository.yml
   loop_control:
     loop_var: work_stations_tasks

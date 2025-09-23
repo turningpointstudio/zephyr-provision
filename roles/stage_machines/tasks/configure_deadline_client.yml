@@ -25,4 +25,7 @@
     arguments:
       --mode unattended
       --connectiontype Remote
-      --proxyrootdir 192.168.9.9:8081
+      --proxyrootdir 192.168.4.186:8080 # set this to be dynamic
+
+# had to launch deadline as admin in order for it to run under vs25 user
+# launches fine as Ansible user

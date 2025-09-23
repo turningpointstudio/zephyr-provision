@@ -5,7 +5,7 @@
     path: "{{ delivery_folder }}"
     state: directory
 
-# this isn't fully working
+# still need to figure out how to scope down persmissions to avoid adding/deleting files to delivery folder
 - name: Set delivery folder to be read only for local user
   win_acl:
     path: "{{ delivery_folder }}"
@@ -13,6 +13,22 @@
     type: allow
     rights: Read
     state: present
+
+# - name: Explicitly deny write permissions for local user
+#   win_acl:
+#     path: "{{ delivery_folder }}"
+#     user: "{{ project_user }}"
+#     type: deny
+#     rights: Write
+#     state: present
+
+# - name: Explicitly deny modify permissions for local user
+#   win_acl:
+#     path: "{{ delivery_folder }}"
+#     user: "{{ project_user }}"
+#     type: deny
+#     rights: Modify
+#     state: present
 
 - name: Share delivery folder
   win_share:

@@ -18,7 +18,7 @@ An example of this would be:
 
 Step 4:
 Run it
-ansible-playbook -i inventory-this-week.yml setup.yml
+ansible-playbook -i inventory.yml provision.yml
 
 Overview:
 bootstrap.ps1 run once per fresh install.

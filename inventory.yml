@@ -1,13 +1,15 @@
 ---
 workstations:
   hosts:
-    server_1:
-      ansible_host: 192.168.4.172
+    workstation_1:
+      ansible_host: 192.168.4.186
 
 stage_machines:
   hosts:
-    node_1:
-      ansible_host: 192.168.4.173
+    stage_machine_1:
+      ansible_host: 192.168.4.187
+    stage_machine_2:
+      ansible_host: 192.168.4.181
 
 site:
   children:

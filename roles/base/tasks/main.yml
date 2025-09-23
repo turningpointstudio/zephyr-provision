@@ -10,10 +10,9 @@
     groups:
       - Users
 
-- name: Download installers to Public Downloads
-  win_get_url:
-    url: " {{ base_installers }}"
-    dest: C:/Users/Public/Downloads
+- name: Check if installer files exist
+  win_stat:
+    path: "C:/Users/Public/Downloads/{{ item | basename }}"
   loop:
     - https://dl.google.com/chrome/install/latest/chrome_installer.exe
     - https://freefilesync.org/download/FreeFileSync_14.4_Windows_Setup.exe # pull the donation edition from a public location
@@ -28,5 +27,13 @@
     # - vpn
     # - https://cfpkg.disguise.one/pkg/installers/d3/gold_release31/227560/d3-full-r31.3.2-227560_4be6d1220d_x64.exe # failed
     # - https://www.resolume.com/download/file?file=Resolume_Alley_7_23_2_rev_51094_Installer.exe # failed
+  register: installer_files
   loop_control:
-    loop_var: base_installers
+    loop_var: item
+
+- name: Download installers to Public Downloads
+  win_get_url:
+    url: "{{ item.item }}"
+    dest: C:/Users/Public/Downloads
+  loop: "{{ installer_files.results }}"
+  when: not item.stat.exists

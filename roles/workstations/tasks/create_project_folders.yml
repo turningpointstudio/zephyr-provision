@@ -5,19 +5,35 @@
     path: "{{ project_folders }}"
     state: directory
   loop:
-    - "D:/{{ project_name }}/Delivery/local"
-    - "D:/{{ project_name }}/Delivery/MASV"
+    - "D:/{{ project_name }}/Delivery/local/_archive"
+    - "D:/{{ project_name }}/Delivery/MASV/_archive"
     - "D:/{{ project_name }}/Docker"
+    - "D:/{{ project_name }}/Render/Inbox"
+    - "D:/{{ project_name }}/Render/Output/_archive"
+    - "D:/{{ project_name }}/Render/Presets"
+    - "D:/{{ project_name }}/Staged/_archive"
+    - "D:/{{ project_name }}/Staged/disguise"
     - "D:/{{ project_name }}/Syncs/Logs"
+    - "D:/{{ project_name }}/Thumbnails"
   loop_control:
     loop_var: project_folders
 
-- name: Share folder
+- name: Share local delivery folder
   win_share:
     name: "{{ project_name }} Local Delivery"
     description: "Folder for local delivery of assets"
     path: "D:/{{ project_name }}/Delivery/local"
-    # change: "" # users who get read/write access
-    read: "{{ project_name }}" # users who get read only access
-    full: "ansible" # users who get full access
+    change: "{{ project_user }}" # users who get read/write access
+    # read: "{{ project_name }}" # users who get read only access
+    # full: "ansible" # users who get full access
+    state: present
+
+- name: Share Render folder
+  win_share:
+    name: "{{ project_name }} Render Source"
+    description: "Folder for render source"
+    path: "D:/{{ project_name }}/Render"
+    change: "{{ project_user }}" # users who get read/write access
+    # read: "{{ project_name }}" # users who get read only access
+    # full: "ansible" # users who get full access
     state: present

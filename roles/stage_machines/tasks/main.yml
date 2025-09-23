@@ -2,8 +2,8 @@
 
 - include_tasks: "{{ stage_machines_tasks }}"
   loop:
-    - create_delivery_folder.yml
+    # - create_delivery_folder.yml
     # - install_software.yml
-    # - setup_deadline.yml
+    - configure_deadline_client.yml
   loop_control:
     loop_var: stage_machines_tasks

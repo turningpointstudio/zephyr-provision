@@ -1,9 +1,12 @@
 ---
-
+# tasks file for stage_machines
 - include_tasks: "{{ stage_machines_tasks }}"
   loop:
-    # - create_delivery_folder.yml
-    # - install_software.yml
-    - configure_deadline_client.yml
+    - install_software.yml
+    - create_delivery_folder.yml
+    - map network drives.yml
   loop_control:
     loop_var: stage_machines_tasks
+
+
+# check that permissions work for delivery folder

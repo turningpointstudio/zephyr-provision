@@ -5,26 +5,66 @@
     letter: M
     state: absent
 
-- name: Map Drive for SS25 user
+- name: Map Drive for user
   block:
     - name: Save the network credentials
       win_credential:
-        name: 192.168.4.93
+        name: 192.168.30.101
         type: domain_password
-        username: abc123
-        secret: abc123-password
+        username: vs25
+        secret: vs25-password
         state: present
 
     - name: Map the drive
       win_mapped_drive:
         letter: M
-        path: "\\\\192.168.4.93\\delivery"
+        path: "\\\\192.168.30.101\\d3 Projects"
+        state: present
+
+    - name: Save the network credentials
+      win_credential:
+        name: 192.168.30.102
+        type: domain_password
+        username: vs25
+        secret: vs25-password
+        state: present
+
+    - name: Map the drive
+      win_mapped_drive:
+        letter: N
+        path: "\\\\192.168.30.102\\d3 Projects"
+        state: present
+
+    - name: Save the network credentials
+      win_credential:
+        name: 192.168.30.105
+        type: domain_password
+        username: vs25
+        secret: vs25-password
+        state: present
+
+    - name: Map the drive
+      win_mapped_drive:
+        letter: Q
+        path: "\\\\192.168.30.105\\d3 Projects"
+        state: present
+
+    - name: Save the network credentials
+      win_credential:
+        name: 192.168.30.106
+        type: domain_password
+        username: vs25
+        secret: vs25-password
+        state: present
+
+    - name: Map the drive
+      win_mapped_drive:
+        letter: R
+        path: "\\\\192.168.30.106\\d3 Projects"
         state: present
 
   vars:
     ansible_become: true
     ansible_become_method: runas
-    ansible_become_user: 'SS25'
-    ansible_become_pass: 'SS25-password'
-
-# requires log out and back in again to see the drive
+    ansible_become_user: '{{ project_user }}'
+    ansible_become_pass: '{{ project_password }}'

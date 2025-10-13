@@ -1,0 +1,28 @@
+--- 
+
+- name: Remove any existing M drive mapping
+  win_mapped_drive:
+    letter: M
+    state: absent
+
+- name: Map Stages Stock Content Drive
+  block:
+    - name: Save the network credentials
+      win_credential:
+        name: 192.168.30.101
+        type: domain_password
+        username: ss25
+        secret: ss25-password
+        state: present
+
+    - name: Map Stages Stock Content Drive
+      win_mapped_drive:
+        letter: M
+        path: "\\\\192.168.30.101\\ss25\\stages"
+        state: present
+
+  vars:
+    ansible_become: true
+    ansible_become_method: runas
+    ansible_become_user: '{{ project_user }}'
+    ansible_become_pass: '{{ project_password }}'

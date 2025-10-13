@@ -1,0 +1,18 @@
+---
+
+- name: Create Show Folders
+  win_file:
+    path: "{{ content_folders }}"
+    state: directory
+  loop:
+    - "D:/{{ project_name }}/Staged/{{project_name}}/objects/VideoFile/PreShow"
+    - "D:/{{ project_name }}/Staged/{{project_name}}/objects/VideoFile/TheMorning"
+    - "D:/{{ project_name }}/Staged/{{project_name}}/objects/VideoFile/Fantasy"
+    - "D:/{{ project_name }}/Staged/{{project_name}}/objects/VideoFile/HalfTime"
+    - "D:/{{ project_name }}/Staged/{{project_name}}/objects/VideoFile/Red"
+    - "D:/{{ project_name }}/Staged/{{project_name}}/objects/VideoFile/GoldenHour"
+    - "D:/{{ project_name }}/Staged/{{project_name}}/objects/VideoFile/BlackTie"
+    - "D:/{{ project_name }}/Staged/{{project_name}}/objects/VideoFile/Finale"
+    - "D:/{{ project_name }}/Staged/{{project_name}}/objects/VideoFile/Interstitials"
+  loop_control:
+    loop_var: content_folders

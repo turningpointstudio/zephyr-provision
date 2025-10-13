@@ -1,8 +1,8 @@
 ---
 workstations:
   hosts:
-    workstation_1:
-      ansible_host: 192.168.4.186
+    hive:
+      ansible_host: 192.168.30.199
 
 stage_machines:
   hosts:
@@ -11,7 +11,22 @@ stage_machines:
     stage_machine_2:
       ansible_host: 192.168.4.181
 
+# media_servers:
+#   hosts:
+#     director:
+#       ansible_host: 192.168.30.101
+#     actor_1:
+#       ansible_host: 192.168.30.102
+#     actor_2:
+#       ansible_host: 192.168.30.103
+#     understudy_1:
+#       ansible_host: 192.168.30.104
+#     understudy_2:
+#       ansible_host: 192.168.30.105
+#     editor_1:
+#       ansible_host: 192.168.30.106
+
 site:
   children:
-    workstations:
     stage_machines:
+    workstations:

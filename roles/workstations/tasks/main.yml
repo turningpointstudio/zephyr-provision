@@ -1,10 +1,17 @@
 ---
-
-- include_tasks: "{{ work_stations_tasks }}"
+# tasks file for workstations
+- include_tasks: "{{ workstations_tasks }}"
   loop:
-    # - create_project_folders.yml
-    # - map_network_drives.yml
-    # - install_software.yml
-    - configure_deadline_repository.yml
+    - create_project_folders.yml
+    - create_show_folders.yml
+    - map_network_drives.yml
+    - install_software.yml
   loop_control:
-    loop_var: work_stations_tasks
+    loop_var: workstations_tasks
+
+
+# Notes:
+# requires log out and back in again to see the drive
+# should clean up map network drives
+# can I make the map drive username / secret / etc. variables?
+# label the network drive on the workstation?

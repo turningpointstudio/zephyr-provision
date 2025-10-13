@@ -4,10 +4,16 @@
   roles:
     - base
 
+- hosts: media_servers
+  roles:
+    - media_servers
+
 - hosts: stage_machines
   roles:
     - stage_machines
+    - render_nodes
 
-# - hosts: workstations
-#   roles:
-#     - workstations
+- hosts: workstations
+  roles:
+    - workstations
+    - render_manager

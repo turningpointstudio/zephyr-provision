@@ -9,3 +9,23 @@
 #     arguments:
 #       - /S
 #       - /desktopicon=yes
+
+# - name: Check if installer files exist
+#   win_stat:
+#     path: "C:/Users/Public/Downloads/{{ item | basename }}"
+#   loop:
+#     - https://dl.google.com/chrome/install/latest/chrome_installer.exe
+#     - https://freefilesync.org/download/FreeFileSync_14.4_Windows_Setup.exe # pull the donation edition from a public location
+#     - https://downloads.ndi.tv/Tools/NDI%206%20Tools.exe
+#     - https://cloudreleases.notch.one/NotchLC_AdobePlugin/NotchLC_AdobeCC_Plugin_1.3.1_win64.exe
+#     - https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe
+#   register: installer_files
+#   loop_control:
+#     loop_var: item
+
+# - name: Download installers to Public Downloads
+#   win_get_url:
+#     url: "{{ item.item }}"
+#     dest: C:/Users/Public/Downloads
+#   loop: "{{ installer_files.results }}"
+#   when: not item.stat.exists

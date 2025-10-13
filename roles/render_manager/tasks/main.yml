@@ -1,0 +1,7 @@
+---
+# tasks file for render_manager
+- include_tasks: "{{ render_manager_tasks }}"
+  loop:
+    - configure_deadline_repository.yml
+  loop_control:
+    loop_var: render_manager_tasks

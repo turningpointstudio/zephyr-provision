@@ -1,0 +1,73 @@
+---
+
+# - name: Download Deadline installer ZIP
+#   win_get_url:
+#     url: https://thinkbox-installers.s3.us-west-2.amazonaws.com/Releases/Deadline/10.4/8_10.4.2.2/Deadline-10.4.2.2-windows-installers.zip
+#     dest: C:\Users\Public\Downloads\Deadline-10.4.2.2-windows-installers.zip
+
+# - name: Extract Deadline installer ZIP
+#   win_unzip:
+#     src: C:\Users\Public\Downloads\Deadline-10.4.2.2-windows-installers.zip
+#     dest: C:\Users\Public\Downloads\Deadline
+#     creates: C:\Users\Public\Downloads\Deadline\Deadline-10.4.2.2-windows-installers
+
+# - name: Find Deadline Repository installer
+#   win_find:
+#     paths: C:\Users\Public\Downloads\Deadline
+#     patterns: ['*Repository*.exe']
+#     file_type: file
+#   register: deadline_repository_installer
+
+# - name: Install Deadline Repository
+#   win_package:
+#     path: "{{ deadline_repository_installer.files[0].path }}"
+#     state: present
+#     arguments:
+#       --mode unattended
+#       --prefix C:\DeadlineRepository10
+#       --mongodir C:\DeadlineDatabase10
+#       --setpermissions true
+#       --dbtype MongoDB
+#       --installmongodb true
+#       --requireSSL false
+#       --dbhost localhost
+#       --dbport 27100
+
+- name: Find Deadline Client installer
+  win_find:
+    paths: C:\Users\Public\Downloads\Deadline
+    patterns: ['*Client*.exe']
+    file_type: file
+  register: deadline_client_installer
+
+- name: Install Full Client Suite
+  win_package:
+    path: "{{ deadline_client_installer.files[0].path }}"
+    state: present
+    arguments:
+      --mode unattended
+      --enable-components proxyconfig,webservice_config
+      --repositorydir C:\DeadlineRepository10
+      --enabletls false
+      --connserveruser Users
+      --httpport 8080
+      --connectiontype Remote
+      --webservice_enabletls false
+      --webserviceuser Users
+      --webservice_httpport 8081
+      --proxyrootdir 127.0.0.1:8080
+
+- name: Set Web Service to start automatically
+  win_lineinfile:
+    path: "C:/ProgramData/Thinkbox/Deadline10/deadline.ini"
+    line: "LaunchWebServiceAtStartup=True"
+    create: yes
+
+- name: Configure Firewall
+  win_firewall_rule:
+    name: "Deadline MongoDB"
+    description: "Allow access to Deadline MongoDB"
+    localport: 27100
+    protocol: tcp
+
+# for some reason after this installs you have to set the repo to be local and set the path and then swtich back to remote.

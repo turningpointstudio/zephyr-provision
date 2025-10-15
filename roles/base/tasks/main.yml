@@ -1,11 +1,42 @@
 ---
 # tasks file for base
-- name: Create Project Specific User
+- name: Create {{ project_user }} User
   win_user:
     name: "{{ project_user }}"
     password: "{{ project_password }}"
-    fullname: "{{ project_user }} User"
+    fullname: "{{ project_user }}"
     description: Project User
     user_cannot_change_password: true
     groups:
       - Administrators
+
+- name: Hide {{ ansible_user }} User
+  win_regedit:
+    path: HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\Userlist
+    name: "{{ ansible_user }}"
+    type: dword
+    data: 0
+
+- name: Copy FreeFileSync Installer to Public Downloads
+  win_copy:
+    src: "FreeFileSync_14.5_[Donation_Edition]_Setup.exe"
+    dest: "C:/Users/Public/Downloads/FreeFileSync_14.5_[Donation_Edition]_Setup.exe"
+
+- name: Install Chrome
+  ansible.windows.win_package:
+    path: "https://dl.google.com/chrome/install/latest/chrome_installer.exe"
+    state: present
+
+- name: Install NotchLC
+  win_package:
+    path: "https://cloudreleases.notch.one/NotchLC_AdobePlugin/NotchLC_AdobeCC_Plugin_1.3.1_win64.exe"
+    state: present
+    arguments:
+      /S
+
+- name: Install Alley
+  win_package:
+    path: "https://dd5sgwxv3xok.cloudfront.net/Resolume_Alley_7_23_2_rev_51094_Installer.exe"
+    state: present
+    arguments:
+      - /VERYSILENT

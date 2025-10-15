@@ -1,15 +1,17 @@
 ---
 workstations:
   hosts:
-    hive:
-      ansible_host: 192.168.30.199
+    workstation_1:
+      ansible_host: 192.168.30.191
 
 stage_machines:
   hosts:
-    stage_machine_1:
-      ansible_host: 192.168.4.187
-    stage_machine_2:
-      ansible_host: 192.168.4.181
+    # stage_machine_1:
+    #   ansible_host: 192.168.30.192
+    # stage_machine_2:
+    #   ansible_host: 192.168.30.193
+    stage_machine_3:
+      ansible_host: 192.168.30.194
 
 # media_servers:
 #   hosts:
@@ -26,7 +28,7 @@ stage_machines:
 #     editor_1:
 #       ansible_host: 192.168.30.106
 
-site:
+soundstorm_25:
   children:
-    stage_machines:
     workstations:
+    stage_machines:

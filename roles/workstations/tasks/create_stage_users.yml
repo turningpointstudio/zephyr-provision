@@ -1,0 +1,11 @@
+---
+
+- name: Create Stage Specific User
+  win_user:
+    name: "{{ stage_user }}"
+    password: "{{ stage_password }}"
+    fullname: "{{ stage_user }}"
+    description: Stage User
+    user_cannot_change_password: true
+    groups:
+      - Administrators

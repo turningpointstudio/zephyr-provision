@@ -9,20 +9,22 @@
   block:
     - name: Save the network credentials
       win_credential:
-        name: 192.168.30.101
+        name: "{{ hostvars['workstation_1']['ansible_host'] }}"
+        # name: 192.168.30.191
         type: domain_password
-        username: ss25
-        secret: ss25-password
+        username: stages
+        secret: stages2025!
         state: present
 
     - name: Map Stages Stock Content Drive
       win_mapped_drive:
         letter: M
-        path: "\\\\192.168.30.101\\ss25\\stages"
+        path: "\\\\{{ hostvars['workstation_1']['ansible_host'] }}\\SS25 Stages Stock Content"
+        # path: "\\\\192.168.30.191\\SS25 Stages Stock Content"
         state: present
 
   vars:
     ansible_become: true
     ansible_become_method: runas
-    ansible_become_user: '{{ project_user }}'
-    ansible_become_pass: '{{ project_password }}'
+    ansible_become_user: '{{ stage_user }}'
+    ansible_become_pass: '{{ stage_password }}'

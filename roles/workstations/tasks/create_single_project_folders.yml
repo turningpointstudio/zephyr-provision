@@ -1,0 +1,52 @@
+---
+
+- name: Set project and stage variables
+  set_fact:
+    current_project: "{{ project_stage_item.0.name }}"
+    current_stage: "{{ project_stage_item.1 }}"
+    full_path: "{{ project_stage_item.0.name }}/{{ project_stage_item.1 }}"
+
+- name: Create Default Folder Structure for {{ full_path }}
+  win_file:
+    path: "{{ folder_item }}"
+    state: directory
+  loop:
+    - "D:/{{ full_path }}/Delivery/local/_archive"
+    - "D:/{{ full_path }}/Delivery/MASV/_archive"
+    - "D:/{{ full_path }}/Docker"
+    - "D:/{{ full_path }}/Proxies"
+    - "D:/{{ full_path }}/Render/Inbox"
+    - "D:/{{ full_path }}/Render/Output/_archive"
+    - "D:/{{ full_path }}/Render/Presets"
+    - "D:/{{ full_path }}/Staged/_archive"
+    - "D:/{{ full_path }}/Staged/{{ current_stage }}"
+    - "D:/{{ full_path }}/Syncs/Logs"
+    - "D:/{{ full_path }}/Thumbnails"
+  loop_control:
+    loop_var: folder_item
+
+- name: Share Local Delivery Folder for {{ full_path }}
+  win_share:
+    name: "{{ current_project }} {{ current_stage }} Delivery"
+    description: "Folder for local delivery of assets"
+    path: "D:/{{ full_path }}/Delivery/local"
+    full: "Everyone"
+    state: present
+
+- name: Share Project Root As Hidden Share for {{ full_path }}
+  win_share:
+    name: "{{ current_project }} - {{ current_stage }}$"
+    description: "Folder for project root"
+    path: "D:/{{ full_path }}"
+    full: "Everyone"
+    state: present
+
+- name: Copy Docker Config Files for {{ full_path }}
+  win_copy:
+    src: "{{ config_files}}"
+    dest: "D:/{{ full_path }}/Docker/{{ config_files }}"
+  loop:
+    - ".env"
+    - "compose.yaml"
+  loop_control:
+    loop_var: config_files

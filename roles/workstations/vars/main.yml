@@ -1,2 +1,14 @@
 ---
 # vars file for workstations
+
+projects:
+  - name: "{{ project_name }}"
+    stages:
+      - "Big Beast"
+      - "Tunnel"
+      - "Park"
+      - "Stages"
+      - "UG1 Plexi"
+      - "UG2 Log"
+      - "UG3 Port"
+      - "UG4 Silk"

@@ -1,39 +1,22 @@
 ---
 
-- name: Create delivery folder
+- name: Create {{ stage_name }} Delivery Folder
   win_file:
     path: "{{ delivery_folder }}"
     state: directory
 
-# still need to figure out how to scope down persmissions to avoid adding/deleting files to delivery folder
-- name: Set delivery folder to be read only for local user
+- name: Set Delivery Folder Permissions for {{ stage_user }}
   win_acl:
     path: "{{ delivery_folder }}"
-    user: "{{ project_user }}"
-    type: allow
-    rights: Read
+    user: "{{ stage_user }}"
+    type: deny
+    rights: Write, Delete, DeleteSubdirectoriesAndFiles
     state: present
 
-# - name: Explicitly deny write permissions for local user
-#   win_acl:
-#     path: "{{ delivery_folder }}"
-#     user: "{{ project_user }}"
-#     type: deny
-#     rights: Write
-#     state: present
-
-# - name: Explicitly deny modify permissions for local user
-#   win_acl:
-#     path: "{{ delivery_folder }}"
-#     user: "{{ project_user }}"
-#     type: deny
-#     rights: Modify
-#     state: present
-
-- name: Share delivery folder
+- name: Share {{ stage_name }} Delivery Folder
   win_share:
-    name: "{{ share_name }} Delivery"
-    description: Folder for local delivery of assets
+    name: "{{ stage_name }} Delivery"
+    description: Folder for local delivery of assets for {{ stage_name }}
     path: "{{ delivery_folder }}"
-    full: "{{ ansible_user }}"
+    full: "Everyone"
     state: present

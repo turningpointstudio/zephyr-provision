@@ -1,7 +1,18 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+Thie role will:
+
+  - Create SS25 style folder structure (project parent with instantiated stage folders)
+
+  - Installs:
+    - Chrome
+    - Alley
+    - NotchLC
+  
+  - Copies to public folder:
+    - FreeFileSync
+    - Adobe Installer Packge
 
 Requirements
 ------------

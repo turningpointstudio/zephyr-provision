@@ -1,0 +1,17 @@
+---
+# Ansible user details
+ansible_user: Ansible  
+ansible_password: Ansible2025!
+ansible_port: 5986
+ansible_connection: winrm
+ansible_winrm_transport: basic
+ansible_winrm_scheme: https
+ansible_winrm_server_cert_validation: ignore
+
+project_name: "SS25"
+
+project_user: "ss25admin"
+project_password: "ss25password"
+
+stage_user: "ss25stage"
+stage_password: "ss25stage"

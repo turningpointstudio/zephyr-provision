@@ -1,7 +1,7 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+Base roll that applies to all hosts and creates a common user for all show machines.
 
 Requirements
 ------------

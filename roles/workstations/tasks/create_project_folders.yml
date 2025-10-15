@@ -1,46 +1,15 @@
 ---
 
-- name: Create Default Folder Structure
-  win_file:
-    path: "{{ project_folders }}"
-    state: directory
-  loop:
-    - "D:/{{ project_name }}/Delivery/local/_archive"
-    - "D:/{{ project_name }}/Delivery/MASV/_archive"
-    - "D:/{{ project_name }}/Docker"
-    - "D:/{{ project_name }}/Proxies"
-    - "D:/{{ project_name }}/Render/Inbox"
-    - "D:/{{ project_name }}/Render/Output/_archive"
-    - "D:/{{ project_name }}/Render/Presets"
-    - "D:/{{ project_name }}/Staged/_archive"
-    - "D:/{{ project_name }}/Staged/{{ project_name }}"
-    - "D:/{{ project_name }}/Syncs/Logs"
-    - "D:/{{ project_name }}/Thumbnails"
+- name: Create folder structure for all project/stage combinations
+  include_tasks: create_single_project_folders.yml
+  loop: "{{ projects | subelements('stages') }}"
   loop_control:
-    loop_var: project_folders
+    loop_var: project_stage_item
 
-- name: Share Local Delivery Folder
+- name: Share Stages Stock Content
   win_share:
-    name: "{{ project_name }}-Delivery"
-    description: "Folder for local delivery of assets"
-    path: "D:/{{ project_name }}/Delivery/local"
-    full:: "{{ project_user }}"
-    state: present
-
-- name: Share Project Root As Hidden Share
-  win_share:
-    name: "{{ project_name }}$"
+    name: "SS25 Stages Stock Content"
     description: "Folder for project root"
-    path: "D:/{{ project_name }}"
-    full: "{{ project_user }}"
+    path: "D:/ss25/stages/Staged/stages"
+    read: "Everyone"
     state: present
-
-- name: Copy Docker Config Files
-  win_copy:
-    src: "{{ config_files}}"
-    dest: "D:/{{ project_name }}/Docker/{{ config_files }}"
-  loop:
-    - ".env"
-    - "compose.yml"
-  loop_control:
-    loop_var: config_files

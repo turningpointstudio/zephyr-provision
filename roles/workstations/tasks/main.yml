@@ -3,11 +3,12 @@
 - include_tasks: "{{ workstations_tasks }}"
   loop:
     - create_project_folders.yml
-    - create_show_folders.yml
+    # - create_show_folders.yml
+    - create_stage_users.yml
     - map_network_drives.yml
-    - install_software.yml
   loop_control:
     loop_var: workstations_tasks
+  when: workstations_tasks != 'map_network_drives.yml' or not (workstations_skip_drive_mapping | default(false))
 
 
 # Notes:
@@ -15,3 +16,5 @@
 # should clean up map network drives
 # can I make the map drive username / secret / etc. variables?
 # label the network drive on the workstation?
+# add the building of freefilesync config file?
+# make stage user variables global so we dont DRY

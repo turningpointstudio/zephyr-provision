@@ -2,11 +2,9 @@
 # tasks file for stage_machines
 - include_tasks: "{{ stage_machines_tasks }}"
   loop:
-    - install_software.yml
+    - configure_users.yml
     - create_delivery_folder.yml
-    - map network drives.yml
+    - map_network_drives.yml
   loop_control:
     loop_var: stage_machines_tasks
-
-
-# check that permissions work for delivery folder
+  when: stage_machines_tasks != 'map_network_drives.yml' or not (stage_machines_skip_drive_mapping | default(false))

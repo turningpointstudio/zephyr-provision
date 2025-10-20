@@ -8,7 +8,7 @@
 
 - name: Share Stages Stock Content
   win_share:
-    name: "SS25 Stages Stock Content"
+    name: "{{ stock_share_name }}"
     description: "Folder for project root"
     path: "D:/ss25/stages/Staged/stages"
     read: "Everyone"

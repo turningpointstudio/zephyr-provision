@@ -1,0 +1,27 @@
+---
+
+# - name: Install Adobe CC Applications
+#   win_package:
+#     path: "D:/SS25/Delivery/local/AME_en_US_WIN_64/AME/Build/setup.exe"
+#     state: present
+#     arguments:
+#       --silent
+
+# - name: Configure AME Webservice
+#   win_lineinfile:
+#     path: "C:/Program Files/Adobe/Adobe Media Encoder 2024/ame_webservice_config.ini"
+#     regexp: '^#?\s*ip'
+#     line: "ip = 192.168.50.9"
+#     state: present
+
+# - name: Configure AME Webservice
+#   win_lineinfile:
+#     path: "C:/Program Files/Adobe/Adobe Media Encoder 2024/ame_webservice_config.ini"
+#     regexp: '^#?\s*port'
+#     line: "port = 8082"
+#     state: present
+
+# need to use AME 2024 (bc of Deadline verion choices, 2025 is not present yet)
+# seems that we don't need the AME webservice configuration?
+
+# render node seems to be launching AME without modifications to the AME ini file

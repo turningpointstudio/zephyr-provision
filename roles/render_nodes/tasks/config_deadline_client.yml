@@ -25,7 +25,11 @@
     arguments:
       --mode unattended
       --connectiontype Remote
-      --proxyrootdir 192.168.4.186:8080 # set this to be dynamic
+      --proxyrootdir {{ hostvars['workstation_1']['ansible_host'] }}:8080
+      --slavestartup truead
 
-# had to launch deadline as admin in order for it to run under vs25 user
-# launches fine as Ansible user
+  vars:
+    ansible_become: true
+    ansible_become_method: runas
+    ansible_become_user: '{{ stage_user }}'
+    ansible_become_pass: '{{ stage_password }}'

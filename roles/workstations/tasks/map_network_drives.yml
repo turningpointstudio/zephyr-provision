@@ -9,16 +9,16 @@
   block:
     - name: Save the network credentials
       win_credential:
-        name: 192.168.30.194
+        name: "{{ hostvars['stage_machine_1']['ansible_host'] }}"
         type: domain_password
-        username: ss25
-        secret: ss25-password
+        username: '{{ project_user }}'
+        secret: '{{ project_password }}'
         state: present
 
     - name: Map the drive
       win_mapped_drive:
         letter: M
-        path: "\\\\192.168.30.194\\Park Delivery"
+        path: "\\\\{{ hostvars['stage_machine_1']['ansible_host'] }}\\{{ hostvars['stage_machine_1']['stage_name'] }} Delivery"
         state: present
 
   vars:

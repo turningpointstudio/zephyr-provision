@@ -1,0 +1,27 @@
+[State]
+Type=Enum
+Items=Global Enabled;Opt-In;Disabled
+Category=Options
+CategoryOrder=0
+CategoryIndex=0
+Label=State
+Default=Global Enabled
+Description=How this event plug-in should respond to events. If Global, all jobs and slaves will trigger the events for this plugin. If Opt-In, jobs and slaves can choose to trigger the events for this plugin. If Disabled, no events are triggered for this plugin.
+
+[APIEndpoint]
+Type=string
+Label=API Endpoint
+Default=localhost
+Description=The API endpoint for Zephyr.
+
+[APIPort]
+Type=string
+Label=API Endpoint
+Default=3001
+Description=The API port for Zephyr.
+
+[TenantId]
+Type=string
+Label=Tenant ID
+Default=
+Description=Your tenant ID.

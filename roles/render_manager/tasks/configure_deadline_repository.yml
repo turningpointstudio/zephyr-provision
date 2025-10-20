@@ -1,67 +1,43 @@
 ---
 
-# - name: Download Deadline installer ZIP
-#   win_get_url:
-#     url: https://thinkbox-installers.s3.us-west-2.amazonaws.com/Releases/Deadline/10.4/8_10.4.2.2/Deadline-10.4.2.2-windows-installers.zip
-#     dest: C:\Users\Public\Downloads\Deadline-10.4.2.2-windows-installers.zip
+- name: Download Deadline installer ZIP
+  win_get_url:
+    url: https://thinkbox-installers.s3.us-west-2.amazonaws.com/Releases/Deadline/10.4/8_10.4.2.2/Deadline-10.4.2.2-windows-installers.zip
+    dest: C:\Users\Public\Downloads\Deadline-10.4.2.2-windows-installers.zip
 
-# - name: Extract Deadline installer ZIP
-#   win_unzip:
-#     src: C:\Users\Public\Downloads\Deadline-10.4.2.2-windows-installers.zip
-#     dest: C:\Users\Public\Downloads\Deadline
-#     creates: C:\Users\Public\Downloads\Deadline\Deadline-10.4.2.2-windows-installers
+- name: Extract Deadline installer ZIP
+  win_unzip:
+    src: C:\Users\Public\Downloads\Deadline-10.4.2.2-windows-installers.zip
+    dest: C:\Users\Public\Downloads\Deadline
+    creates: C:\Users\Public\Downloads\Deadline\Deadline-10.4.2.2-windows-installers
 
-# - name: Find Deadline Repository installer
-#   win_find:
-#     paths: C:\Users\Public\Downloads\Deadline
-#     patterns: ['*Repository*.exe']
-#     file_type: file
-#   register: deadline_repository_installer
-
-# - name: Install Deadline Repository
-#   win_package:
-#     path: "{{ deadline_repository_installer.files[0].path }}"
-#     state: present
-#     arguments:
-#       --mode unattended
-#       --prefix C:\DeadlineRepository10
-#       --mongodir C:\DeadlineDatabase10
-#       --setpermissions true
-#       --dbtype MongoDB
-#       --installmongodb true
-#       --requireSSL false
-#       --dbhost localhost
-#       --dbport 27100
-
-- name: Find Deadline Client installer
+- name: Find Deadline Repository installer
   win_find:
     paths: C:\Users\Public\Downloads\Deadline
-    patterns: ['*Client*.exe']
+    patterns: ['*Repository*.exe']
     file_type: file
-  register: deadline_client_installer
+  register: deadline_repository_installer
 
-- name: Install Full Client Suite
+- name: Install Deadline Repository
   win_package:
-    path: "{{ deadline_client_installer.files[0].path }}"
+    path: "{{ deadline_repository_installer.files[0].path }}"
     state: present
     arguments:
       --mode unattended
-      --enable-components proxyconfig,webservice_config
-      --repositorydir C:\DeadlineRepository10
-      --enabletls false
-      --connserveruser Users
-      --httpport 8080
-      --connectiontype Remote
-      --webservice_enabletls false
-      --webserviceuser Users
-      --webservice_httpport 8081
-      --proxyrootdir 127.0.0.1:8080
-
-- name: Set Web Service to start automatically
-  win_lineinfile:
-    path: "C:/ProgramData/Thinkbox/Deadline10/deadline.ini"
-    line: "LaunchWebServiceAtStartup=True"
-    create: yes
+      --prefix C:\DeadlineRepository10
+      --mongodir C:\DeadlineDatabase10
+      --setpermissions true
+      --dbtype MongoDB
+      --installmongodb true
+      --requireSSL false
+      --dbhost localhost
+      --dbport 27100
+    
+  vars:
+    ansible_become: true
+    ansible_become_method: runas
+    ansible_become_user: '{{ project_user }}'
+    ansible_become_pass: '{{ project_password }}'
 
 - name: Configure Firewall
   win_firewall_rule:
@@ -70,4 +46,61 @@
     localport: 27100
     protocol: tcp
 
+- name: Install Deadline client with elevated privileges
+  block:
+  - name: Find Deadline Client installer
+    win_find:
+      paths: C:\Users\Public\Downloads\Deadline
+      patterns: ['*Client*.exe']
+      file_type: file
+    register: deadline_client_installer
+
+  # - name: Install Deadline Client
+  #   win_package:
+  #     path: "{{ deadline_client_installer.files[0].path }}"
+  #     state: present
+  #     arguments:
+  #       --mode unattended
+  #       --connectiontype Remote
+  #       --repositorydir C:\DeadlineRepository10
+  #       --enabletls false
+  #       --connserveruser Users
+
+  - name: Install Deadline RCS and Web Service
+    win_package:
+      path: "{{ deadline_client_installer.files[0].path }}"
+      state: present
+      arguments:
+        --mode unattended
+        --enable-components proxyconfig,webservice_config
+        --webservice_enabletls false
+        --webserviceuser Users
+        --webservice_httpport 8081
+        --proxyrootdir 127.0.0.1:8080
+        --httpport 8080
+        --connectiontype Remote
+        --repositorydir C:\DeadlineRepository10
+        --enabletls false
+        --connserveruser Users
+
+  - name: Set Web Service to start automatically
+    win_lineinfile:
+      path: "C:/ProgramData/Thinkbox/Deadline10/deadline.ini"
+      line: "LaunchWebServiceAtStartup=True"
+      create: yes
+
+  - name: Disable Web Service Authentication
+    win_lineinfile:
+      path: "C:/ProgramData/Thinkbox/Deadline10/deadline.ini"
+      line: "WebServiceClientSSLAuthentication=NotRequired"
+      create: yes
+  
+  vars:
+    ansible_become: true
+    ansible_become_method: runas
+    ansible_become_user: '{{ project_user }}'
+    ansible_become_pass: '{{ project_password }}'
+
 # for some reason after this installs you have to set the repo to be local and set the path and then swtich back to remote.
+# seems that the webservice_enabletls false is not working so having to edit the ini file manually.
+# should install the full client suite so i can monitor the repo and such.

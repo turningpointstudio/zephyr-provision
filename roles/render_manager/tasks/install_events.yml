@@ -1,0 +1,5 @@
+---
+- name: Copy ZephyrTracker event handler to Deadline repository
+  win_copy:
+    src: "ZephyrTracker/"
+    dest: "C:\\DeadlineRepository10\\custom\\events\\ZephyrTracker\\"

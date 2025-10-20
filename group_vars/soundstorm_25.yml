@@ -15,3 +15,5 @@ project_password: "ss25password"
 
 stage_user: "ss25stage"
 stage_password: "ss25stage"
+
+stock_share_name: "SS25 Stages Stock Content"

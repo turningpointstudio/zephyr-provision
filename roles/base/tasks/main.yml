@@ -40,3 +40,23 @@
     state: present
     arguments:
       - /VERYSILENT
+
+# - name: Install FFMPEG
+#   win_package:
+#     path: "https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-full.7z"
+#     state: present
+#     arguments:
+#       - /VERYSILENT
+#       - /NORESTART
+#       - /SP-
+#       - /LOG=ffmpeg-install.log
+#       - /DIR=C:\Program Files\ffmpeg
+#       - /NOCANCEL
+#       - /NOREPAIR
+#       - /NOUNINSTALL
+
+# https://www.hostinger.com/tutorials/how-to-install-ffmpeg#How_to_install_FFmpeg_on_Windows
+
+- name: Rename Machines
+  win_hostname:
+    name: "{{ machine_name }}"

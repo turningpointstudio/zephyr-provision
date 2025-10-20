@@ -1,2 +1,8 @@
 ---
 # tasks file for render_nodes
+- include_tasks: "{{ render_nodes_tasks }}"
+  loop:
+    - config_deadline_client.yml
+    - config_media_encoder.yml
+  loop_control:
+    loop_var: render_nodes_tasks

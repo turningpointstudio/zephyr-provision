@@ -33,6 +33,14 @@
     full: "Everyone"
     state: present
 
+- name: Share Render Folder
+  win_share:
+    name: "{{ current_project }} {{ current_stage }} Render"
+    description: "Folder for render access"
+    path: "D:/{{ full_path }}/Render"
+    full: "Everyone"
+    state: present
+
 - name: Share Project Root As Hidden Share for {{ full_path }}
   win_share:
     name: "{{ current_project }} - {{ current_stage }}$"

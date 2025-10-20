@@ -73,6 +73,14 @@ class RenderTracker (DeadlineEventListener):
     def OnJobError(self, job):
         self.SendToAPI(job, 'Error')
 
+    def JobDump(self, job):
+      for attr in dir(job):
+        try:
+          val = getattr(job, attr)
+          self.LogInfo(f"{attr}: {val}")
+        except:
+          pass
+
     def SendToAPI(self, job, status):
         # Get configuration values
         apiEndpoint = self.GetConfigEntryWithDefault("APIEndpoint", "")
@@ -110,6 +118,12 @@ class RenderTracker (DeadlineEventListener):
                 "tenant_id": job.JobExtraInfo0,
                 "parent_id": job.JobExtraInfo1,
                 "package_name": job.JobExtraInfo2,
+                "job_submit_machine": job.JobSubmitMachine,
+                "job_input_path": job.GetJobPluginInfoKeyValue('InputPath'),
+                "job_output_path": job.GetJobPluginInfoKeyValue('OutputPath'),
+                "job_preset_file": job.GetJobPluginInfoKeyValue('PresetFile'),
+                "job_total_render_time": job.TotalRenderTime.ToString(),
+                "job_completed_frames": job.CompletedFrames,
             }
             
             response = requests.post(url, headers=headers, data=json.dumps(data))

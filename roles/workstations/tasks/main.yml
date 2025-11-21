@@ -17,3 +17,5 @@
 # label the network drive on the workstation?
 # add the building of freefilesync config file?
 # make stage user variables global so we dont DRY
+
+# add the preset templates to the files pushed to the workstation

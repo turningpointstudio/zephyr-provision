@@ -17,7 +17,7 @@
     - "D:/{{ full_path }}/Proxies"
     - "D:/{{ full_path }}/Render/Inbox"
     - "D:/{{ full_path }}/Render/Output/_archive"
-    - "D:/{{ full_path }}/Render/Presets"
+    - "D:/{{ full_path }}/Render/Presets/Templates"
     - "D:/{{ full_path }}/Staged/_archive"
     - "D:/{{ full_path }}/Staged/{{ current_stage }}"
     - "D:/{{ full_path }}/Syncs/Logs"

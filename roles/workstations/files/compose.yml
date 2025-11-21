@@ -1,0 +1,54 @@
+name: Dev
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - 27019:27017
+    volumes:
+      - db-data:/var/lib/mongodb/data
+    networks:
+      - zephyrbridge
+  zephyr:
+    image: zptps/zephyr-desktop:latest
+    container_name: zephyr
+    depends_on:
+      - mongodb
+    ports:
+      - "3001:3001"
+    networks:
+      - zephyrbridge
+    restart: on-failure
+    env_file:
+      - .env
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017
+      - DOCKER_ENV=true
+    volumes:
+      - ${EXTERNAL_DELIVERY}:${DELIVERY_FOLDER}
+      - ${EXTERNAL_STAGED}:${STAGED_FOLDER}
+      # - first_server:${FIRST_SERVER}
+      # - last_server:${LAST_SERVER}
+      - ${EXTERNAL_THUMBNAILS}:${THUMBNAIL_FOLDER}
+      - ${EXTERNAL_SYNCLOGS}:${SYNCLOG_FOLDER}
+      - ${EXTERNAL_RENDER}:${RENDER_FOLDER}
+      - ${EXTERNAL_PROXIES}:${PROXY_FOLDER}
+      - ${EXTERNAL_DISGUISE_PROXY_FOLDER}:${DISGUISE_PROXY_FOLDER}
+
+networks:
+  zephyrbridge:
+    driver: bridge
+
+volumes:
+  first_server:
+    driver_opts:
+      type: cifs
+      o: username=vs25,password=vs25-password,vers=3.0
+      device: //192.168.30.101/d3 Projects/vs25/objects/videofile
+  last_server:
+    driver_opts:
+      type: cifs
+      o: username=vs25,password=vs25-password,vers=3.0
+      device: //192.168.30.105/d3 Projects/vs25/objects/videofile
+  db-data:

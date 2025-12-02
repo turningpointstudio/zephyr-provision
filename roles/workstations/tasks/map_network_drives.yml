@@ -1,15 +1,15 @@
---- 
+---
 
-- name: Remove any existing M drive mapping
-  win_mapped_drive:
-    letter: M
-    state: absent
-
-- name: Map Drive for user
+- name: Map network drives for content machines
   block:
+    - name: Remove any existing drive mapping
+      win_mapped_drive:
+        letter: "{{ item.letter }}"
+        state: absent
+
     - name: Save the network credentials
       win_credential:
-        name: "{{ hostvars['stage_machine_1']['ansible_host'] }}"
+        name: "{{ hostvars[item.hostname]['ansible_host'] }}"
         type: domain_password
         username: '{{ project_user }}'
         secret: '{{ project_password }}'
@@ -17,9 +17,19 @@
 
     - name: Map the drive
       win_mapped_drive:
-        letter: M
-        path: "\\\\{{ hostvars['stage_machine_1']['ansible_host'] }}\\{{ hostvars['stage_machine_1']['stage_name'] }} Delivery"
+        letter: "{{ item.letter }}"
+        path: "\\\\{{ hostvars[item.hostname]['ansible_host'] }}\\{{ hostvars[item.hostname]['location_name'] }} Delivery"
         state: present
+        label: "{{ hostvars[item.hostname]['location_name'] }} Delivery"
+
+  loop:
+    - { hostname: 'content_machine_1', letter: 'M' }
+    - { hostname: 'content_machine_2', letter: 'N' }
+    - { hostname: 'content_machine_3', letter: 'O' }
+    - { hostname: 'content_machine_4', letter: 'P' }
+    - { hostname: 'content_machine_5', letter: 'Q' }
+    - { hostname: 'content_machine_6', letter: 'R' }
+    - { hostname: 'content_machine_7', letter: 'S' }
 
   vars:
     ansible_become: true

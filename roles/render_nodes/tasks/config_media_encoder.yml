@@ -1,11 +1,35 @@
 ---
 
-# - name: Install Adobe CC Applications
-#   win_package:
-#     path: "D:/SS25/Delivery/local/AME_en_US_WIN_64/AME/Build/setup.exe"
-#     state: present
-#     arguments:
-#       --silent
+- name: Copy AME Installer to Public Downloads
+  win_copy:
+    src: "AME2024_en_US_WIN_64.zip"
+    dest: "C:/Users/Public/Downloads/AME2024_en_US_WIN_64.zip"
+
+- name: Extract installer ZIP
+  win_unzip:
+    src: C:\Users\Public\Downloads\AME2024_en_US_WIN_64.zip
+    dest: C:\Users\Public\Downloads\AME2024_en_US_WIN_64
+    creates: C:\Users\Public\Downloads\AME2024_en_US_WIN_64\AME2024
+
+- name: Find installer
+  win_find:
+    paths: C:\Users\Public\Downloads\AME2024_en_US_WIN_64
+    patterns: ['*setup*.exe']
+    file_type: file
+  register: ame_installer
+
+- name: Install AME
+  win_package:
+    path: "{{ ame_installer.files[0].path }}"
+    state: present
+    arguments:
+      --silent
+    
+  vars:
+    ansible_become: true
+    ansible_become_method: runas
+    ansible_become_user: '{{ project_user }}'
+    ansible_become_pass: '{{ project_password }}'
 
 # - name: Configure AME Webservice
 #   win_lineinfile:
@@ -20,8 +44,3 @@
 #     regexp: '^#?\s*port'
 #     line: "port = 8082"
 #     state: present
-
-# need to use AME 2024 (bc of Deadline verion choices, 2025 is not present yet)
-# seems that we don't need the AME webservice configuration?
-
-# render node seems to be launching AME without modifications to the AME ini file

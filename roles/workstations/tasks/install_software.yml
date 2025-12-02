@@ -1,0 +1,9 @@
+---
+
+- name: Install Docker Desktop
+  ansible.windows.win_package:
+    path: "https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe"
+    state: present
+    arguments:
+      - --quiet
+      - --accept-license

@@ -1,5 +1,4 @@
 ---
-# Ansible user details
 ansible_user: Ansible  
 ansible_password: Ansible2025!
 ansible_port: 5986
@@ -13,7 +12,7 @@ project_name: "SS25"
 project_user: "ss25admin"
 project_password: "ss25password"
 
-stage_user: "ss25stage"
-stage_password: "ss25stage"
+content_user: "ss25content"
+content_password: "ss25content"
 
 stock_share_name: "SS25 Stages Stock Content"

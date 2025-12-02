@@ -1,7 +1,9 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+This role does the following:
+
+  - 
 
 Requirements
 ------------
@@ -36,9 +38,3 @@ Author Information
 ------------------
 
 An optional section for the role authors to include contact information, or a website (HTML is not allowed).
-
-
-Notes:
-for some reason after deadline installs you have to set the repo to be local and set the path and then swtich back to remote.
-seems that the webservice_enabletls false is not working so having to edit the ini file manually.
-should install the full client suite so i can monitor the repo and such.

@@ -2,18 +2,40 @@
 workstations:
   hosts:
     workstation_1:
-      ansible_host: 192.168.4.195
+      ansible_host: 172.16.10.65
+    workstation_2:
+      ansible_host: 172.16.10.68
+    workstation_3:
+      ansible_host: 172.16.10.69
 
-stage_machines:
+render_nodes:
   hosts:
-    stage_machine_1:
-      ansible_host: 192.168.4.193
-    # stage_machine_2:
-    #   ansible_host: 192.168.30.193
-    # stage_machine_3:
-    #   ansible_host: 192.168.30.194
+    render_1:
+      ansible_host: 172.16.10.66
+    render_2:
+      ansible_host: 172.16.10.67
+    workstation_4:
+      ansible_host: 172.16.10.70
+    
+content_machines:
+  hosts:
+    content_machine_1:
+      ansible_host: 172.16.10.71
+    content_machine_2:
+      ansible_host: 172.16.10.72
+    content_machine_3:
+      ansible_host: 172.16.10.73
+    content_machine_4:
+      ansible_host: 172.16.10.74
+    content_machine_5:
+      ansible_host: 172.16.10.75
+    content_machine_6:
+      ansible_host: 172.16.10.76
+    content_machine_7:
+      ansible_host: 172.16.10.77
 
 soundstorm_25:
   children:
     workstations:
-    stage_machines:
+    render_nodes:
+    content_machines:

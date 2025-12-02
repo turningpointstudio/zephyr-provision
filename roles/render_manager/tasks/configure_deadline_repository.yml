@@ -100,7 +100,3 @@
     ansible_become_method: runas
     ansible_become_user: '{{ project_user }}'
     ansible_become_pass: '{{ project_password }}'
-
-# for some reason after this installs you have to set the repo to be local and set the path and then swtich back to remote.
-# seems that the webservice_enabletls false is not working so having to edit the ini file manually.
-# should install the full client suite so i can monitor the repo and such.

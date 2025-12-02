@@ -1,0 +1,11 @@
+---
+- name: Copy ZephyrTracker event handler to Deadline repository
+  win_copy:
+    src: "ZephyrTracker/"
+    dest: "C:\\DeadlineRepository10\\custom\\events\\ZephyrTracker\\"
+
+- name: Copy render presets for all project/stage combinations
+  include_tasks: install_presets_for_stage.yml
+  loop: "{{ projects | subelements('stages') }}"
+  loop_control:
+    loop_var: project_stage_item

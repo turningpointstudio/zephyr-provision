@@ -1,0 +1,49 @@
+---
+
+- name: Create ffmpeg temp directory
+  ansible.windows.win_file:
+    path: C:\temp\ffmpeg
+    state: directory
+
+- name: Download ffmpeg archive
+  ansible.windows.win_get_url:
+    url: "https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-full.zip"
+    dest: C:\temp\ffmpeg\ffmpeg.zip
+    force: no
+
+- name: Extract ffmpeg archive
+  community.windows.win_unzip:
+    src: C:\temp\ffmpeg\ffmpeg.zip
+    dest: C:\temp\ffmpeg\extracted
+    creates: C:\temp\ffmpeg\extracted
+
+- name: Find extracted ffmpeg directory
+  ansible.windows.win_find:
+    paths: C:\temp\ffmpeg\extracted
+    file_type: directory
+    recurse: no
+  register: ffmpeg_dirs
+
+- name: Copy ffmpeg to Program Files
+  ansible.windows.win_copy:
+    src: "{{ ffmpeg_dirs.files[0].path }}\\"
+    dest: C:\ffmpeg\
+    remote_src: yes
+
+- name: Add ffmpeg to system PATH
+  ansible.windows.win_path:
+    elements:
+      - C:\ffmpeg\bin
+    scope: machine
+    state: present
+
+- name: Verify ffmpeg installation
+  ansible.windows.win_command: ffmpeg -version
+  register: ffmpeg_version
+  changed_when: false
+  failed_when: false
+
+- name: Display ffmpeg version
+  ansible.builtin.debug:
+    msg: "ffmpeg installed successfully: {{ ffmpeg_version.stdout_lines[0] }}"
+  when: ffmpeg_version.rc == 0

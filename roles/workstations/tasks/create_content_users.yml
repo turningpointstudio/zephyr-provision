@@ -1,0 +1,11 @@
+---
+
+- name: Create Content Machine Specific User
+  win_user:
+    name: "{{ content_user }}"
+    password: "{{ content_password }}"
+    fullname: "{{ content_user }}"
+    description: Content User
+    user_cannot_change_password: true
+    groups:
+      - Administrators

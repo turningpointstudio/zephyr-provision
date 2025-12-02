@@ -5,9 +5,10 @@ projects:
   - name: "{{ project_name }}"
     stages:
       - "Big Beast"
-      - "Tunnel"
       - "Park"
+      - "Sitewide"
       - "Stages"
+      - "Tunnel"
       - "UG1 Plexi"
       - "UG2 Log"
       - "UG3 Port"

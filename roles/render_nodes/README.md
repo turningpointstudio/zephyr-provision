@@ -38,16 +38,8 @@ Author Information
 An optional section for the role authors to include contact information, or a website (HTML is not allowed).
 
 
+Notes:
 
-
-
-
-
-
-
-ADD DXV INSTALL
-ADD DOCKER DESKTOP INSTALL
-ADD AME PRESET FILES
-ADD AME INSTALLER
-ADD ALLEY INSTALLER
-UPDATE env and compose files
+need to use AME 2024 (bc of Deadline verion choices, 2025 is not present yet)
+seems that we don't need the AME webservice configuration?
+render node seems to be launching AME without modifications to the AME ini file

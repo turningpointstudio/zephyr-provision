@@ -1,18 +1,12 @@
 ---
-
-# Phase 1: Base setup and share creation (no drive mapping)
 - hosts: all
   roles:
     - base
 
-- hosts: media_servers
+- hosts: content_machines
   roles:
-    - media_servers
-
-- hosts: stage_machines
-  roles:
-    - role: stage_machines
-      stage_machines_skip_drive_mapping: true
+    - role: content_machines
+      content_machines_skip_drive_mapping: true
     - role: render_nodes
 
 - hosts: workstations
@@ -21,12 +15,11 @@
       workstations_skip_drive_mapping: true
     - role: render_manager
 
-# Phase 2: Map network drives (shares now exist)
-- hosts: stage_machines
+- hosts: content_machines
   tasks:
     - name: Map network drives on stage machines
       include_role:
-        name: stage_machines
+        name: content_machines
         tasks_from: map_network_drives.yml
 
 - hosts: workstations

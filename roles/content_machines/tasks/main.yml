@@ -1,0 +1,10 @@
+---
+# tasks file for stage_machines
+- include_tasks: "{{ content_machines_tasks }}"
+  loop:
+    - configure_users.yml
+    - create_delivery_folder.yml
+    - map_network_drives.yml
+  loop_control:
+    loop_var: content_machines_tasks
+  when: content_machines_tasks != 'map_network_drives.yml' or not (content_machines_skip_drive_mapping | default(false))

@@ -1,0 +1,9 @@
+---
+- name: Set full_path variable for current project/stage
+  set_fact:
+    full_path: "{{ project_stage_item.0.name }}/{{ project_stage_item.1 }}"
+
+- name: Copy Preset Templates to Render Templates Folder for {{ full_path }}
+  win_copy:
+    src: "RenderPresets/"
+    dest: "D:/{{ full_path }}/Render/Presets/Templates/"

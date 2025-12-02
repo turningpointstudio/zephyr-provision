@@ -1,9 +1,0 @@
----
-# tasks file for media_servers
-- name: Share d3 Project Folder
-  win_share:
-    name: "{{ inventory_hostname }} - d3 Projects"
-    description: "Local delivery folder for {{ inventory_hostname }}"
-    path: "D:/d3 Projects"
-    full: "{{ project_user }}"
-    state: present

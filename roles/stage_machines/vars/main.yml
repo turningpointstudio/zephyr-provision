@@ -1,3 +1,0 @@
----
-# vars file for stage_machines
-delivery_folder: D:/{{ stage_name }} Delivery

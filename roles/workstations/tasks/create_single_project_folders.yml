@@ -56,6 +56,6 @@
     dest: "D:/{{ full_path }}/Docker/{{ config_files }}"
   loop:
     - ".env"
-    - "compose.yaml"
+    - "compose.yml"
   loop_control:
     loop_var: config_files

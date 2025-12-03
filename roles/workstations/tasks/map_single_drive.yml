@@ -1,0 +1,21 @@
+---
+
+- name: Remove any existing drive mapping for {{ item.letter }}
+  win_mapped_drive:
+    letter: "{{ item.letter }}"
+    state: absent
+
+- name: Save the network credentials for {{ hostvars[item.hostname]['ansible_host'] }}
+  win_credential:
+    name: "{{ hostvars[item.hostname]['ansible_host'] }}"
+    type: domain_password
+    username: '{{ project_user }}'
+    secret: '{{ project_password }}'
+    state: present
+
+- name: Map drive {{ item.letter }} to {{ hostvars[item.hostname]['location_name'] }} Delivery
+  win_mapped_drive:
+    letter: "{{ item.letter }}"
+    path: "\\\\{{ hostvars[item.hostname]['ansible_host'] }}\\{{ project_name }} {{ hostvars[item.hostname]['location_name'] }} Delivery"
+    state: present
+    # label: "{{ hostvars[item.hostname]['location_name'] }} Delivery"

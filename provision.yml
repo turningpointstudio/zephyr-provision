@@ -1,19 +1,19 @@
 ---
-- hosts: all
-  roles:
-    - base
+# - hosts: all
+#   roles:
+#     - base
 
 - hosts: content_machines
   roles:
     - role: content_machines
       content_machines_skip_drive_mapping: true
-    - role: render_nodes
+    # - role: render_nodes
 
 - hosts: workstations
   roles:
     - role: workstations
       workstations_skip_drive_mapping: true
-    - role: render_manager
+    # - role: render_manager
 
 - hosts: content_machines
   tasks:

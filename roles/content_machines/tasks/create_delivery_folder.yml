@@ -13,9 +13,14 @@
     rights: Write, Delete, DeleteSubdirectoriesAndFiles
     state: present
 
-- name: Share {{ location_name }} Delivery Folder
+- name: Remove old {{ location_name }} Delivery share (if exists)
   win_share:
     name: "{{ location_name }} Delivery"
+    state: absent
+
+- name: Share {{ location_name }} Delivery Folder
+  win_share:
+    name: "{{ project_name }} {{ location_name }} Delivery"
     description: Folder for local delivery of assets for {{ location_name }}
     path: "{{ delivery_folder }}"
     full: "Everyone"

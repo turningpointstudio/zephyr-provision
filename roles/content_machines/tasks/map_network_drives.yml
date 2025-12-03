@@ -9,7 +9,7 @@
   block:
     - name: Save the network credentials
       win_credential:
-        name: "{{ hostvars['workstation_1']['ansible_host'] }}"
+        name: "{{ hostvars['workstation_4']['ansible_host'] }}"
         type: domain_password
         username: "{{ content_user }}"
         secret: "{{ content_password }}"
@@ -18,7 +18,7 @@
     - name: Map Stages Stock Content Drive
       win_mapped_drive:
         letter: M
-        path: "\\\\{{ hostvars['workstation_1']['ansible_host'] }}\\{{ stock_share_name }}"
+        path: "\\\\{{ hostvars['workstation_4']['ansible_host'] }}\\{{ stock_share_name }}"
         state: present
 
   vars:

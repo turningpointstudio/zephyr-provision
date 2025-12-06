@@ -1,0 +1,11 @@
+---
+
+- name: Install VS Code
+  win_package:
+    path: "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-user"
+    state: present
+    arguments:
+      - /VERYSILENT
+      - /NORESTART
+
+# needs to runas otherwise it installs for ansible user only

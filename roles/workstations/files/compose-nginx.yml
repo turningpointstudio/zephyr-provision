@@ -1,0 +1,18 @@
+name: zephyr-loadbalancer
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: zephyr-nginx
+    ports:
+      - "3001:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    restart: unless-stopped
+    networks:
+      - zephyr-lb-network
+
+networks:
+  zephyr-lb-network:
+    driver: bridge
+    name: zephyr-lb-network

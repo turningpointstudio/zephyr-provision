@@ -1,0 +1,5 @@
+---
+- hosts: workstation_1
+  tasks:
+    - name: install VS Code
+      include_tasks: ../tasks/install_vscode.yml

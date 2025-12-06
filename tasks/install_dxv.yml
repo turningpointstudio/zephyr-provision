@@ -1,0 +1,7 @@
+---
+- name: Install Alley
+  win_package:
+    path: "https://dd5sgwxv3xok.cloudfront.net/Resolume_Alley_7_23_2_rev_51094_Installer.exe"
+    state: present
+    arguments:
+      - /VERYSILENT

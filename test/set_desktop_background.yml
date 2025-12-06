@@ -1,0 +1,10 @@
+---
+- hosts: all
+  vars:
+    # Wallpaper style: 0=Centered, 2=Stretched, 6=Fit, 10=Fill, 22=Span
+    # Optional - defaults to "10" (Fill) if not specified
+    wallpaper_style: "10"
+  tasks:
+    - name: Set desktop background
+      include_tasks: ../tasks/set_desktop_background.yml
+      # Note: desktop_name is read from host_vars/<hostname>.yml

@@ -1,0 +1,13 @@
+# - name: Configure AME Webservice
+#   win_lineinfile:
+#     path: "C:/Program Files/Adobe/Adobe Media Encoder 2024/ame_webservice_config.ini"
+#     regexp: '^#?\s*ip'
+#     line: "ip = 192.168.50.9"
+#     state: present
+
+# - name: Configure AME Webservice
+#   win_lineinfile:
+#     path: "C:/Program Files/Adobe/Adobe Media Encoder 2024/ame_webservice_config.ini"
+#     regexp: '^#?\s*port'
+#     line: "port = 8082"
+#     state: present

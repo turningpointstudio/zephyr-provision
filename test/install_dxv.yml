@@ -1,0 +1,5 @@
+---
+- hosts: all
+  tasks:
+    - name: install dxv
+      include_tasks: ../tasks/install_dxv.yml

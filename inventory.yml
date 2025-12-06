@@ -1,7 +1,7 @@
 ---
 workstations:
   hosts:
-    workstation_4:
+    workstation_1:
       ansible_host: 172.16.10.65
  
 content_machines:
@@ -26,6 +26,8 @@ content_machines:
       ansible_host: 172.16.10.68
     workstation_3:
       ansible_host: 172.16.10.69
+    workstation_4:
+      ansible_host: 172.16.10.70
     render_1:
       ansible_host: 172.16.10.66
     render_2:

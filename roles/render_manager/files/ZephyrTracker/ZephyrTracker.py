@@ -85,7 +85,8 @@ class RenderTracker (DeadlineEventListener):
         # Get configuration values
         apiEndpoint = self.GetConfigEntryWithDefault("APIEndpoint", "")
         apiPort = self.GetConfigEntryWithDefault("APIPort", "3001")
-        tenantId = self.GetConfigEntryWithDefault("TenantId", "")
+        # tenantId = self.GetConfigEntryWithDefault("TenantId", "")
+        tenantId = job.ExtraInfo0.split(':')[-1].strip() if job.ExtraInfo0 else ""
 
         # Debug logging
         self.LogInfo(f"ZephyrTracker: Job {job.JobId} status changed to {status}")

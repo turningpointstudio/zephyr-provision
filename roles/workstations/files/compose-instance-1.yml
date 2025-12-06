@@ -1,0 +1,49 @@
+name: zephyr-instance-1
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb-instance-1
+    ports:
+      - "27011:27017"
+    volumes:
+      - db-data-instance-1:/data/db
+    networks:
+      - zephyr-instance-network
+      - zephyr-lb-network
+    restart: unless-stopped
+
+  zephyr:
+    image: zptps/zephyr-desktop:latest
+    container_name: zephyr-instance-1
+    depends_on:
+      - mongodb
+    ports:
+      - "3002:3001"
+    networks:
+      - zephyr-instance-network
+      - zephyr-lb-network
+    restart: unless-stopped
+    env_file:
+      - .env.instance-1
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017
+      - DOCKER_ENV=true
+    volumes:
+      - ${EXTERNAL_DELIVERY}:${DELIVERY_FOLDER}
+      - ${EXTERNAL_STAGED}:${STAGED_FOLDER}
+      - ${EXTERNAL_THUMBNAILS}:${THUMBNAIL_FOLDER}
+      - ${EXTERNAL_SYNCLOGS}:${SYNCLOG_FOLDER}
+      - ${EXTERNAL_RENDER}:${RENDER_FOLDER}
+      - ${EXTERNAL_PROXIES}:${PROXY_FOLDER}
+      - ${EXTERNAL_DISGUISE_PROXY_FOLDER}:${DISGUISE_PROXY_FOLDER}
+
+networks:
+  zephyr-instance-network:
+    driver: bridge
+  zephyr-lb-network:
+    external: true
+    name: zephyr-lb-network
+
+volumes:
+  db-data-instance-1:

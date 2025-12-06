@@ -31,5 +31,5 @@
   vars:
     ansible_become: true
     ansible_become_method: runas
-    ansible_become_user: '{{ stage_user }}'
-    ansible_become_pass: '{{ stage_password }}'
+    ansible_become_user: '{{ content_user }}'
+    ansible_become_pass: '{{ content_password }}'

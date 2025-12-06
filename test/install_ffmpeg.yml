@@ -1,0 +1,5 @@
+---
+- hosts: render_1
+  tasks:
+    - name: install FFMPEG
+      include_tasks: ../tasks/install_ffmpeg.yml

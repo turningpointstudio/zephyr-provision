@@ -1,5 +1,0 @@
----
-- hosts: workstations
-  tasks:
-    - name: Install software
-      include_tasks: ../tasks/install_software.yml

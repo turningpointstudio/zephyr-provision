@@ -1,0 +1,86 @@
+---
+# Set desktop background/wallpaper for Windows
+
+- name: Copy wallpaper image to target machine
+  ansible.windows.win_copy:
+    src: "{{ playbook_dir }}/../files/desktops/{{ desktop_name }}"
+    dest: "C:\\Users\\Public\\Pictures\\wallpaper.png"
+  when: desktop_name is defined
+
+- name: Set desktop wallpaper for project_user
+  ansible.windows.win_regedit:
+    path: HKCU:\Control Panel\Desktop
+    name: Wallpaper
+    data: "C:\\Users\\Public\\Pictures\\wallpaper.png"
+    type: string
+  become: true
+  become_user: "{{ project_user }}"
+  become_method: runas
+  when: project_user is defined
+  vars:
+    ansible_become_password: "{{ project_password }}"
+
+- name: Set wallpaper style for project_user
+  ansible.windows.win_regedit:
+    path: HKCU:\Control Panel\Desktop
+    name: WallpaperStyle
+    data: "{{ wallpaper_style | default('10') }}"
+    type: string
+  become: true
+  become_user: "{{ project_user }}"
+  become_method: runas
+  when: project_user is defined
+  vars:
+    ansible_become_password: "{{ project_password }}"
+
+- name: Set tile wallpaper for project_user
+  ansible.windows.win_regedit:
+    path: HKCU:\Control Panel\Desktop
+    name: TileWallpaper
+    data: "0"
+    type: string
+  become: true
+  become_user: "{{ project_user }}"
+  become_method: runas
+  when: project_user is defined
+  vars:
+    ansible_become_password: "{{ project_password }}"
+
+- name: Set desktop wallpaper for content_user
+  ansible.windows.win_regedit:
+    path: HKCU:\Control Panel\Desktop
+    name: Wallpaper
+    data: "C:\\Users\\Public\\Pictures\\wallpaper.png"
+    type: string
+  become: true
+  become_user: "{{ content_user }}"
+  become_method: runas
+  when: content_user is defined
+  vars:
+    ansible_become_password: "{{ content_password }}"
+
+- name: Set wallpaper style for content_user
+  ansible.windows.win_regedit:
+    path: HKCU:\Control Panel\Desktop
+    name: WallpaperStyle
+    data: "{{ wallpaper_style | default('10') }}"
+    type: string
+  become: true
+  become_user: "{{ content_user }}"
+  become_method: runas
+  when: content_user is defined
+  vars:
+    ansible_become_password: "{{ content_password }}"
+
+- name: Set tile wallpaper for content_user
+  ansible.windows.win_regedit:
+    path: HKCU:\Control Panel\Desktop
+    name: TileWallpaper
+    data: "0"
+    type: string
+  become: true
+  become_user: "{{ content_user }}"
+  become_method: runas
+  when: content_user is defined
+  vars:
+    ansible_become_password: "{{ content_password }}"

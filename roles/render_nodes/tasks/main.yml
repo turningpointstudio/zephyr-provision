@@ -4,6 +4,5 @@
   loop:
     - config_deadline_client.yml
     - config_media_encoder.yml
-    - config_ffmpeg.yml
   loop_control:
     loop_var: render_nodes_tasks

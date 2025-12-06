@@ -1,0 +1,5 @@
+---
+- hosts: all
+  tasks:
+    - name: install AME
+      include_tasks: ../tasks/install_ame.yml
